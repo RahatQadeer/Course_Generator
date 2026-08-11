@@ -1,0 +1,222 @@
+@import "tailwindcss";
+
+/* --------------------------------------------------------------------------
+   App shell palette — warm neutral paper with a slate-blue accent.
+   -------------------------------------------------------------------------- */
+
+:root {
+  --canvas: #f4f4f2;
+  --surface: #ffffff;
+  --surface-muted: #fafaf9;
+  --ink: #16181c;
+  --ink-soft: #4b5058;
+  --ink-faint: #8a9099;
+  --line: #e4e4e1;
+  --line-strong: #d3d3cf;
+  --brand: #4f7796;
+  --brand-hover: #446880;
+  --brand-soft: #eaf0f5;
+  --brand-ring: #4f779633;
+  --positive: #2f7d5d;
+  --positive-soft: #e8f3ed;
+  --warn: #a5701f;
+  --warn-soft: #fbf2e2;
+  --danger: #b4402f;
+  --danger-soft: #fbecea;
+  --radius: 10px;
+}
+
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-faint: var(--ink-faint);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-soft: var(--brand-soft);
+  --color-positive: var(--positive);
+  --color-positive-soft: var(--positive-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --font-sans: var(--font-sans-app);
+  --font-mono: var(--font-mono-app);
+  --font-serif: var(--font-serif-app);
+}
+
+* {
+  border-color: var(--line);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-sans-app), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--brand-soft);
+  color: var(--ink);
+}
+
+/* Focus ring used by every interactive primitive. */
+.focus-ring:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
+/* Scrollbars ------------------------------------------------------------- */
+
+.scroll-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}
+.scroll-thin::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.scroll-thin::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+.scroll-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Animations ------------------------------------------------------------- */
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 var(--brand-ring);
+  }
+  70% {
+    box-shadow: 0 0 0 8px transparent;
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.animate-fade-in {
+  animation: fade-in 0.25s ease both;
+}
+.animate-pulse-ring {
+  animation: pulse-ring 1.8s ease-out infinite;
+}
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--line);
+  border-radius: 6px;
+}
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.6), transparent);
+  animation: shimmer 1.6s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Course theme surface — variables are injected per theme at render time.
+   -------------------------------------------------------------------------- */
+
+.course-theme {
+  background: var(--ct-bg);
+  color: var(--ct-text);
+  font-family: var(--ct-font-body);
+}
+
+.course-theme .ct-display {
+  font-family: var(--ct-font-heading);
+  color: var(--ct-heading);
+  letter-spacing: var(--ct-heading-tracking, -0.01em);
+}
+
+.course-theme .ct-card {
+  background: var(--ct-surface);
+  border-radius: var(--ct-radius);
+  border: var(--ct-card-border);
+  box-shadow: var(--ct-card-shadow);
+}
+
+.course-theme .ct-muted {
+  color: var(--ct-muted);
+}
+
+.course-theme .ct-accent-text {
+  color: var(--ct-primary);
+}
+
+/* Print — used by "Export as PDF". */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+  }
+  .print-page-break {
+    break-before: page;
+  }
+  .print-avoid-break {
+    break-inside: avoid;
+  }
+  .course-theme {
+    background: #fff !important;
+  }
+}
