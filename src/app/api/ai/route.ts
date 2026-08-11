@@ -6,7 +6,7 @@ import type { NextRequest } from "next/server";
 import { z } from "zod";
 
 export const runtime = "nodejs";
-export const maxDuration = 800;
+export const maxDuration = 300;
 
 const bodySchema = z.object({
   course: courseSchema,
